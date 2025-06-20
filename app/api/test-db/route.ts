@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const testQuery = await sql`SELECT 1 as test`
     
     // Check if tables exist
-    const tables = await sql`
+    const tables: { table_name: string }[] = await sql`
       SELECT table_name 
       FROM information_schema.tables 
       WHERE table_schema = 'public'

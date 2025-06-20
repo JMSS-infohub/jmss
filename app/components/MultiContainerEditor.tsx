@@ -29,6 +29,10 @@ const containerTypes = [
   { type: 'tabs', name: 'Tab Container', description: 'Tabbed content organization' }
 ]
 
+function isNonEmptyRow(row: string[]): boolean {
+  return row.length > 0;
+}
+
 export default function MultiContainerEditor({ contentId, onContainersSaved }: MultiContainerEditorProps) {
   const [containers, setContainers] = useState<ContainerInstance[]>([])
   const [loading, setLoading] = useState(true)
@@ -77,7 +81,7 @@ export default function MultiContainerEditor({ contentId, onContainersSaved }: M
     const container = containers[index]
     if (!container.id) {
       // Remove from local state if not saved yet
-      const updatedContainers = containers.filter((_, i) => i !== index)
+      const updatedContainers = containers.filter((_: any, i: number) => i !== index)
       setContainers(updatedContainers)
       return
     }
@@ -91,7 +95,7 @@ export default function MultiContainerEditor({ contentId, onContainersSaved }: M
       })
 
       if (response.ok) {
-        const updatedContainers = containers.filter((_, i) => i !== index)
+        const updatedContainers = containers.filter((_: any, i: number) => i !== index)
         setContainers(updatedContainers)
       } else {
         alert('Error deleting container')
@@ -400,7 +404,7 @@ export default function MultiContainerEditor({ contentId, onContainersSaved }: M
                   />
                   <button
                     onClick={() => {
-                      const newItems = (container.content.items || ['']).filter((_, i) => i !== itemIndex);
+                      const newItems = (container.content.items || ['']).filter((_: string, i: number) => i !== itemIndex);
                       updateContainer(index, {
                         content: { ...container.content, items: newItems }
                       });
@@ -464,7 +468,7 @@ export default function MultiContainerEditor({ contentId, onContainersSaved }: M
                     />
                     <button
                       onClick={() => {
-                        const newSteps = (container.content.steps || []).filter((_, i) => i !== stepIndex);
+                        const newSteps = (container.content.steps || []).filter((_: any, i: number) => i !== stepIndex);
                         updateContainer(index, {
                           content: { ...container.content, steps: newSteps }
                         });
@@ -568,7 +572,7 @@ export default function MultiContainerEditor({ contentId, onContainersSaved }: M
                         <button
                           onClick={() => {
                             const newQuestions = [...(container.content.questions || [])];
-                            const newOptions = (newQuestions[questionIndex].options || []).filter((_, i) => i !== optionIndex);
+                            const newOptions = (newQuestions[questionIndex].options || []).filter((_: string, i: number) => i !== optionIndex);
                             newQuestions[questionIndex] = { ...newQuestions[questionIndex], options: newOptions };
                             updateContainer(index, {
                               content: { ...container.content, questions: newQuestions }
@@ -596,7 +600,7 @@ export default function MultiContainerEditor({ contentId, onContainersSaved }: M
                   </div>
                   <button
                     onClick={() => {
-                      const newQuestions = (container.content.questions || []).filter((_, i) => i !== questionIndex);
+                      const newQuestions = (container.content.questions || []).filter((_: any, i: number) => i !== questionIndex);
                       updateContainer(index, {
                         content: { ...container.content, questions: newQuestions }
                       });
@@ -647,7 +651,7 @@ export default function MultiContainerEditor({ contentId, onContainersSaved }: M
                     />
                     <button
                       onClick={() => {
-                        const newTabs = (container.content.tabs || []).filter((_, i) => i !== tabIndex);
+                        const newTabs = (container.content.tabs || []).filter((_: any, i: number) => i !== tabIndex);
                         updateContainer(index, {
                           content: { ...container.content, tabs: newTabs }
                         });
@@ -718,9 +722,9 @@ export default function MultiContainerEditor({ contentId, onContainersSaved }: M
                   className="w-full p-2 border border-gray-300 rounded"
                   value={(container.content.rows || []).map(row => Array.isArray(row) ? row.join(', ') : row).join('\n')}
                   onChange={(e) => {
-                    const rows = e.target.value.split('\n').map(line => 
-                      line.split(',').map(cell => cell.trim()).filter(cell => cell)
-                    ).filter(row => row.length > 0);
+                    const rows = (e.target.value.split('\n').map((line: string) => 
+                      line.split(',').map((cell: string) => cell.trim()).filter(isNonEmptyRow)
+                    ) as string[][]).filter(isNonEmptyRow);
                     updateContainer(index, {
                       content: { ...container.content, rows }
                     });

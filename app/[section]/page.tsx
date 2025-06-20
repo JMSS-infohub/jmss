@@ -248,7 +248,7 @@ export default function SectionPage() {
 
     // Render additional elements
     const renderAdditionalElements = () => {
-      const elements = []
+      const elements: any[] = [] // Array of React JSX elements
       
       // Notes
       if (content.notes && Array.isArray(content.notes)) {

@@ -30,7 +30,6 @@
     "start": "next start -H 0.0.0.0",
     "start-local": "next start",
     "lint": "next lint",
-
     "populate-content": "node scripts/run-sql.js",
     "cleanup-duplicates": "node scripts/run-sql.js sql/cleanup-duplicates.sql",
     "network-info": "node scripts/get-local-ip.js"
