@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #00a6fb;
+  --secondary: #0582ca;
+  --accent: #006494;
+  --light: #e6f2ff;
+  --success: #4caf50;
+  --warning: #ff9800;
+  --danger: #f44336;
+  --background: #f5f5f5;
+  --text: #333;
+  --card-bg: white;
+  --border: #ddd;
+  --module-bg: white;
+  --module-shadow: rgba(0,0,0,0.1);
+  --button-text: white;
+}
+
+[data-theme="dark"] {
+  --primary: #0099e6;
+  --secondary: #0077b3;
+  --accent: #005580;
+  --light: #1a1a1a;
+  --background: #121212;
+  --text: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --border: #333;
+  --module-bg: #1e1e1e;
+  --module-shadow: rgba(0,0,0,0.3);
+  --button-text: #e0e0e0;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.module {
+  background-color: var(--module-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px var(--module-shadow);
+  transition: transform 0.3s, background-color 0.3s;
+  cursor: pointer;
+  border-left: 5px solid var(--accent);
+}
+
+.module:hover {
+  transform: translateY(-5px);
+}
+
+.module h2 {
+  color: var(--accent);
+  margin-top: 0;
+}
+
+.module p {
+  color: var(--text);
+}
+
+.warning-box {
+  background-color: var(--light);
+  border-left: 4px solid var(--warning);
+  padding: 1rem;
+  margin: 1rem 0;
+  color: var(--text);
+}
+
+.danger-box {
+  background-color: var(--light);
+  border-left: 4px solid var(--danger);
+  padding: 1rem;
+  margin: 1rem 0;
+  color: var(--text);
+}
+
+.success-box {
+  background-color: var(--light);
+  border-left: 4px solid var(--success);
+  padding: 1rem;
+  margin: 1rem 0;
+  color: var(--text);
+}
+
+.procedure-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.procedure-item {
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  background-color: var(--light);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--text);
+}
+
+.procedure-icon {
+  font-size: 1.2rem;
+  min-width: 1.5rem;
+  text-align: center;
+} 
