@@ -35,7 +35,7 @@ export function verifyToken(token: string): any {
 
 export async function getUserByEmail(email: string): Promise<User | null> {
   try {
-    const result = await sql`
+    const result = await sql()`
       SELECT * FROM users WHERE email = ${email} LIMIT 1
     `;
     return result[0] || null;
@@ -47,7 +47,7 @@ export async function getUserByEmail(email: string): Promise<User | null> {
 
 export async function getUserById(id: number): Promise<User | null> {
   try {
-    const result = await sql`
+    const result = await sql()`
       SELECT * FROM users WHERE id = ${id} LIMIT 1
     `;
     return result[0] || null;
@@ -65,7 +65,7 @@ export async function createUser(email: string, password: string, name: string, 
     console.log('createUser: Password hashed successfully');
     
     console.log('createUser: Inserting into database...');
-    const result = await sql`
+    const result = await sql()`
       INSERT INTO users (email, password_hash, name, role)
       VALUES (${email}, ${hashedPassword}, ${name}, ${role})
       RETURNING *

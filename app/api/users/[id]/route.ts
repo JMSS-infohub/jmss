@@ -53,7 +53,7 @@ export async function PUT(
     }
 
     // Check if user exists
-    const existingUser = await sql`
+    const existingUser = await sql()`
       SELECT id FROM users WHERE id = ${userId}
     `
 
@@ -65,7 +65,7 @@ export async function PUT(
     }
 
     // Check if email is already taken by another user
-    const emailCheck = await sql`
+    const emailCheck = await sql()`
       SELECT id FROM users WHERE email = ${email} AND id != ${userId}
     `
 
@@ -80,14 +80,14 @@ export async function PUT(
     let result;
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 12)
-      result = await sql`
+      result = await sql()`
         UPDATE users 
         SET email = ${email}, name = ${name}, role = ${role}, password_hash = ${hashedPassword}, updated_at = NOW()
         WHERE id = ${userId}
         RETURNING id, email, name, role, created_at, updated_at
       `
     } else {
-      result = await sql`
+      result = await sql()`
         UPDATE users 
         SET email = ${email}, name = ${name}, role = ${role}, updated_at = NOW()
         WHERE id = ${userId}
@@ -147,7 +147,7 @@ export async function DELETE(
     }
 
     // Check if user exists
-    const existingUser = await sql`
+    const existingUser = await sql()`
       SELECT id FROM users WHERE id = ${userId}
     `
 
@@ -159,7 +159,7 @@ export async function DELETE(
     }
 
     // Delete user
-    await sql`
+    await sql()`
       DELETE FROM users WHERE id = ${userId}
     `
 

@@ -35,7 +35,7 @@ export async function GET(
       )
     }
 
-    const result = await sql`
+    const result = await sql()`
       SELECT 
         ci.*,
         s.name as section_name
@@ -132,7 +132,7 @@ export async function PUT(
       )
     }
 
-    const result = await sql`
+    const result = await sql()`
       UPDATE content_items SET
         title = ${title},
         description = ${description},
@@ -200,7 +200,7 @@ export async function DELETE(
       )
     }
 
-    const result = await sql`
+    const result = await sql()`
       DELETE FROM content_items 
       WHERE id = ${contentId}
       RETURNING *

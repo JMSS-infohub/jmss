@@ -37,11 +37,20 @@ export async function GET(request: NextRequest) {
     }
     
     console.log('Admin access granted, fetching users...')
-    const users = await sql`
-      SELECT id, email, name, role, created_at
-      FROM users
-      ORDER BY created_at DESC
-    `
+    const users = await sql()`
+      SELECT 
+        u.id,
+        u.email,
+        u.name,
+        u.role,
+        u.created_at,
+        u.updated_at,
+        COUNT(ci.id) as content_count
+      FROM users u
+      LEFT JOIN content_items ci ON u.id = ci.author_id
+      GROUP BY u.id, u.email, u.name, u.role, u.created_at, u.updated_at
+      ORDER BY u.created_at DESC
+    `;
     
     console.log('Found', users.length, 'users')
     return NextResponse.json(users)
@@ -93,7 +102,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user already exists
-    const existingUser = await sql`
+    const existingUser = await sql()`
       SELECT id FROM users WHERE email = ${email}
     `
 
@@ -108,7 +117,7 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 12)
 
     // Create user
-    const result = await sql`
+    const result = await sql()`
       INSERT INTO users (email, name, password_hash, role)
       VALUES (${email}, ${name}, ${hashedPassword}, ${role})
       RETURNING id, email, name, role, created_at

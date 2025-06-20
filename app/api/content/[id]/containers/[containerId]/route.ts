@@ -15,7 +15,7 @@ export async function GET(
       return NextResponse.json({ error: 'Invalid ID' }, { status: 400 })
     }
 
-    const container = await sql`
+    const container = await sql()`
       SELECT 
         cci.id,
         cci.content_item_id,
@@ -26,7 +26,8 @@ export async function GET(
         cci.updated_at
       FROM content_container_instances cci
       WHERE cci.id = ${containerId} AND cci.content_item_id = ${contentId}
-    `
+      LIMIT 1
+    `;
 
     if (container.length === 0) {
       return NextResponse.json({ error: 'Container not found' }, { status: 404 })
@@ -66,7 +67,7 @@ export async function PUT(
     const { container_type, content, order_index } = body
 
     // Verify the content item exists and user has permission
-    const contentItem = await sql`
+    const contentItem = await sql()`
       SELECT id, author_id FROM content_items WHERE id = ${contentId}
     `
     
@@ -79,7 +80,7 @@ export async function PUT(
     }
 
     // Verify the container exists
-    const existingContainer = await sql`
+    const existingContainer = await sql()`
       SELECT id FROM content_container_instances 
       WHERE id = ${containerId} AND content_item_id = ${contentId}
     `
@@ -93,7 +94,7 @@ export async function PUT(
     if (content !== undefined) updateData.content = content
     if (order_index !== undefined) updateData.order_index = order_index
 
-    const updatedContainer = await sql`
+    const updatedContainer = await sql()`
       UPDATE content_container_instances 
       SET 
         container_type = COALESCE(${container_type}, container_type),
@@ -135,7 +136,7 @@ export async function DELETE(
     }
 
     // Verify the content item exists and user has permission
-    const contentItem = await sql`
+    const contentItem = await sql()`
       SELECT id, author_id FROM content_items WHERE id = ${contentId}
     `
     
@@ -148,7 +149,7 @@ export async function DELETE(
     }
 
     // Delete the container
-    const result = await sql`
+    const result = await sql()`
       DELETE FROM content_container_instances 
       WHERE id = ${containerId} AND content_item_id = ${contentId}
     `

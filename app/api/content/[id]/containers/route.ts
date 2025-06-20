@@ -14,7 +14,7 @@ export async function GET(
       return NextResponse.json({ error: 'Invalid content ID' }, { status: 400 })
     }
 
-    const containers = await sql`
+    const containers = await sql()`
       SELECT 
         cci.id,
         cci.content_item_id,
@@ -64,7 +64,7 @@ export async function POST(
     }
 
     // Verify the content item exists and user has permission
-    const contentItem = await sql`
+    const contentItem = await sql()`
       SELECT id, author_id FROM content_items WHERE id = ${contentId}
     `
     
@@ -76,7 +76,7 @@ export async function POST(
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
-    const newContainer = await sql`
+    const newContainer = await sql()`
       INSERT INTO content_container_instances 
         (content_item_id, container_type, content, order_index)
       VALUES 

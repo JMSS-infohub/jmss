@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const searchTerm = `%${q.toLowerCase()}%`
     
     // Search in sections
-    const sectionsResult = await sql`
+    const sectionsResult = await sql()`
       SELECT 
         'section' as type,
         id,
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     `
 
     // Search in content items
-    const contentResult = await sql`
+    const contentResult = await sql()`
       SELECT 
         'content' as type,
         ci.id,

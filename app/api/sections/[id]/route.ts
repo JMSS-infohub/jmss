@@ -28,7 +28,7 @@ export async function PUT(
     console.log('Updating section with values:', { name, description, emoji, order_index, sectionId })
     
     // Use Neon's template literal syntax
-    const result = await sql`
+    const result = await sql()`
       UPDATE sections 
       SET 
         name = ${name},
@@ -77,7 +77,7 @@ export async function DELETE(
     }
 
     // Delete the section (content items will be deleted due to CASCADE)
-    const result = await sql`
+    const result = await sql()`
       DELETE FROM sections 
       WHERE id = ${sectionId}
       RETURNING *

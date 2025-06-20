@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const contents = await sql`
+    const contents = await sql()`
       SELECT 
         ci.*,
         s.name as section_name
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
 
     // Check if section exists
     console.log('Checking if section exists for section_id:', section_id)
-    const sectionCheck = await sql`
+    const sectionCheck = await sql()`
       SELECT id FROM sections WHERE id = ${section_id}
     `
     
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('Section exists, creating content item...')
-    const result = await sql`
+    const result = await sql()`
       INSERT INTO content_items (
         title, description, section_id, emoji, content, 
         container_type, author_id, published

@@ -24,7 +24,7 @@ export async function GET(
     }
     
     // First, let's check if there's ANY content for this section (debug query)
-    const allContentForSection = await sql`
+    const allContentForSection = await sql()`
       SELECT id, title, section_id, published, order_index, created_at
       FROM content_items 
       WHERE section_id = ${sectionId}
@@ -40,7 +40,7 @@ export async function GET(
       }))
     )
 
-    const contentItems = await sql`
+    const contentItems = await sql()`
       SELECT 
         id,
         title,
