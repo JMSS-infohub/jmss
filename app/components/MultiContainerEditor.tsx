@@ -720,11 +720,11 @@ export default function MultiContainerEditor({ contentId, onContainersSaved }: M
                 </label>
                 <textarea
                   className="w-full p-2 border border-gray-300 rounded"
-                  value={(container.content.rows || []).map(row => Array.isArray(row) ? row.join(', ') : row).join('\n')}
+                  value={(container.content.rows || []).map((row: any) => Array.isArray(row) ? row.join(', ') : row).join('\n')}
                   onChange={(e) => {
                     const rows = (e.target.value.split('\n').map((line: string) => 
-                      line.split(',').map((cell: string) => cell.trim()).filter(isNonEmptyRow)
-                    ) as string[][]).filter(isNonEmptyRow);
+                      line.split(',').map((cell: string) => cell.trim()).filter((cell: string) => cell)
+                    ) as string[][]).filter((row: string[]) => row.length > 0);
                     updateContainer(index, {
                       content: { ...container.content, rows }
                     });

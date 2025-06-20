@@ -35,7 +35,6 @@
     "network-info": "node scripts/get-local-ip.js"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^3.0.0",
     "@types/jsonwebtoken": "^9.0.9",
     "eslint": "^8",
     "eslint-config-next": "14.0.4"

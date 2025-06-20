@@ -4,13 +4,18 @@ neonConfig.fetchConnectionCache = true;
 
 let sql: any;
 
-if (process.env.DATABASE_URL) {
-  sql = neon(process.env.DATABASE_URL);
-} else {
-  throw new Error('DATABASE_URL environment variable is not set');
+function getSql() {
+  if (!sql) {
+    if (process.env.DATABASE_URL) {
+      sql = neon(process.env.DATABASE_URL);
+    } else {
+      throw new Error('DATABASE_URL environment variable is not set');
+    }
+  }
+  return sql;
 }
 
-export { sql };
+export { getSql as sql };
 
 export interface User {
   id: number;
