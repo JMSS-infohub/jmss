@@ -1,0 +1,18 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # These will be overridden by Netlify environment variables
+  DATABASE_URL = "postgresql://neondb_owner:npg_sZcWROjl9i6C@ep-black-frog-a8nomna0-pooler.eastus2.azure.neon.tech/neondb?sslmode=require"
+  JWT_SECRET = "jmss-super-secret-jwt-key-2024"
+  NEXTAUTH_SECRET = "jmss-nextauth-secret-key-2024"
+  NEXTAUTH_URL = "https://jmss.netlify.app"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  directory = "netlify/functions" 
