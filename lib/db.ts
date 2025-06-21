@@ -6,10 +6,22 @@ let sql: any;
 
 function getSql() {
   if (!sql) {
-    if (process.env.DATABASE_URL) {
-      sql = neon(process.env.DATABASE_URL);
-    } else {
-      throw new Error('DATABASE_URL environment variable is not set');
+    try {
+      if (process.env.DATABASE_URL) {
+        sql = neon(process.env.DATABASE_URL);
+      } else {
+        console.warn('DATABASE_URL environment variable is not set');
+        // Return a mock function that throws when called
+        sql = () => {
+          throw new Error('DATABASE_URL environment variable is not set');
+        };
+      }
+    } catch (error) {
+      console.error('Error initializing database connection:', error);
+      // Return a mock function that throws when called
+      sql = () => {
+        throw new Error('Failed to initialize database connection');
+      };
     }
   }
   return sql;
